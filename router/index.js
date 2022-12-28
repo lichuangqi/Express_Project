@@ -1,12 +1,7 @@
 //路由级别的中间件
 const express = require('express')
 const router = express.Router()
-router.get('/',(req,res)=>{
-  console.log(req.method)
-  res.send('/index')
-})
-router.get('/users',(req,res)=>{
-    console.log(req.method)
-    res.send('/users')
-})
+//加载不同的路由模块
+router.use('./user',require('./user'))
+router.use('./video',require('./video'))
 module.exports = router;

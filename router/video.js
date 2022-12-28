@@ -1,13 +1,7 @@
 //路由级别的中间件
 const express = require('express')
 const router = express.Router()
-router.get('/list',(req,res)=>{
-  console.log(req.method)
-  // JSON.parse('(')
-  res.send('/video-list')
-})
-router.get('/users',(req,res)=>{
-    console.log(req.method)
-    res.send('/users')
-})
+const videoController = require('../controller/videoController')
+router
+  .get('/list', videoController.list)
 module.exports = router;
