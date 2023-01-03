@@ -5,6 +5,7 @@ const router = express.Router()
 const userController = require('../controller/userController')
 const { body, validationResult } = require('express-validator')
 const validator = require('../middleware/validator/userValidator')
+const {verifyToken} = require('../util/jwt')
 router
   .post('/registers',
     validator.register,
@@ -12,6 +13,6 @@ router
   .post('/logins',
     validator.login,
     userController.login)
-  .get('/lists', userController.list)
+  .get('/lists',verifyToken,userController.list)
   .delete('/', userController.delete)
 module.exports = router;
