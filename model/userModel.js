@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const md5 = require('../util/md5')
+const baseModel = require('./baseModel')
 const userSchema = new mongoose.Schema({
     username:{
         type:String,
@@ -10,7 +12,9 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        set:value=>md5(value),
+        select:false
     },
     phone:{
         type:String,
@@ -20,14 +24,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:null
     },
-    createAt:{
-        type:Date,
-        default:Date.now()
-    },
-    updateAt:{
-        type:Date,
-        default:Date.now()
-    }
+    ...baseModel
 })
 
 module.exports = userSchema;

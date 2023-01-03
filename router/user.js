@@ -6,9 +6,12 @@ const userController = require('../controller/userController')
 const { body, validationResult } = require('express-validator')
 const validator = require('../middleware/validator/userValidator')
 router
-  .post('/register',
+  .post('/registers',
     validator.register,
     userController.register)
-  .get('/list', userController.list)
+  .post('/logins',
+    validator.login,
+    userController.login)
+  .get('/lists', userController.list)
   .delete('/', userController.delete)
 module.exports = router;
