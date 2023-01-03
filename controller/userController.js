@@ -1,5 +1,4 @@
 const { User } = require('../model/index')
-const jwt = require('jsonwebtoken')
 const { createToken } = require('../util/jwt.js')
 // user registration
 exports.register = async (req, res) => {
@@ -20,12 +19,11 @@ exports.login = async (req, res) => {
         res.status(402).json({error:'email or password is incorrect'})
     }
     dbback = dbback.toJSON()
-    // dbback.token = jwt.sign(dbback,'14c0b2c9-b042-446f-935d-ba999409b504')
     dbback.token = await createToken(dbback)
     res.status(200).json(dbback)
 }
 exports.list = async (req, res) => {
-    console.log(req.method)
+    console.log(req.user)
     // JSON.parse('(')
     res.send('/user-list')
 }

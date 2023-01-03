@@ -1,6 +1,7 @@
 const mongosse = require('mongoose');
+const { mongopath } = require('../config/config.default')
 async function main() {
-    await mongosse.connect('mongodb://localhost:27017/express-video')
+    await mongosse.connect(mongopath)
 }
 
 main().then(res => {
@@ -11,5 +12,5 @@ main().then(res => {
 })
 
 module.exports = {
-    User:mongosse.model('User',require('./userModel'))
+    User: mongosse.model('User', require('./userModel'))
 }

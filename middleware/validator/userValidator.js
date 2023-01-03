@@ -22,13 +22,22 @@ module.exports.register = validate([
       if (phoneValidate) {
         return Promise.reject('phone number is already regirstered')
       }
-    })
+    }).bail(),
+    body('password')
+    .notEmpty().withMessage('password cannot be empty').bail()
+    .isLength({min:5}).withMessage('password length is not smaller than 5').bail()
 ])
 
 module.exports.login = validate([
   body('email')
     .notEmpty().withMessage('email cannot be empty').bail()
-    .isEmail().withMessage('email context is incorrect').bail(),
+    .isEmail().withMessage('email context is incorrect').bail()
+    .custom(async val => {
+      const emailValidate = await User.findOne({ email: val })
+      if (!emailValidate) {
+        return Promise.reject('email is not regirstered')
+      }
+    }),
   body('password')
     .notEmpty().withMessage('password cannot be empty').bail()
 ])
